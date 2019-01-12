@@ -12,4 +12,12 @@ public class MainApplicationTests {
     @Test
     public void contextLoads(){
     }
+
+    @Test
+    public void main() {
+    }
+
+    @Test
+    public void run() {
+    }
 }
