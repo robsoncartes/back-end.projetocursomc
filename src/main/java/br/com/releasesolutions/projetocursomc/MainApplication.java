@@ -1,8 +1,12 @@
 package br.com.releasesolutions.projetocursomc;
 
 import br.com.releasesolutions.projetocursomc.domain.Categoria;
+import br.com.releasesolutions.projetocursomc.domain.Cidade;
+import br.com.releasesolutions.projetocursomc.domain.Estado;
 import br.com.releasesolutions.projetocursomc.domain.Produto;
 import br.com.releasesolutions.projetocursomc.repositories.CategoriaRepository;
+import br.com.releasesolutions.projetocursomc.repositories.CidadeRepository;
+import br.com.releasesolutions.projetocursomc.repositories.EstadoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.ProdutoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,10 +19,19 @@ public class MainApplication implements CommandLineRunner {
 
     private final CategoriaRepository categoriaRepository;
     private final ProdutoRepository produtoRepository;
+    private final EstadoRepository estadoRepository;
+    private final CidadeRepository cidadeRepository;
 
-    public MainApplication(CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository) {
+    public MainApplication(
+            CategoriaRepository categoriaRepository,
+            ProdutoRepository produtoRepository,
+            EstadoRepository estadoRepository,
+            CidadeRepository cidadeRepository
+    ) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
+        this.estadoRepository = estadoRepository;
+        this.cidadeRepository = cidadeRepository;
     }
 
     public static void main(String[] args) {
@@ -45,5 +58,19 @@ public class MainApplication implements CommandLineRunner {
 
         categoriaRepository.saveAll(Arrays.asList(categoria1, categoria2));
         produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3));
+
+        Estado estado1 = new Estado(null, "São Paulo");
+        Estado estado2 = new Estado(null, "Rio de Janeiro");
+
+        Cidade cidade1 = new Cidade(null, "São José dos Campos", estado1);
+        Cidade cidade2 = new Cidade(null, "São Paulo", estado1);
+        Cidade cidade3 = new Cidade(null, "Rio de Janeiro", estado2);
+
+
+        estado1.getCidades().addAll(Arrays.asList(cidade1, cidade2));
+        estado2.getCidades().add(cidade3);
+
+        estadoRepository.saveAll(Arrays.asList(estado1, estado2));
+        cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
     }
 }
