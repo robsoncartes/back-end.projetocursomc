@@ -1,24 +1,28 @@
 package br.com.releasesolutions.projetocursomc.services;
 
-    // Nota: O Spring Boot na versão 2.X.X é compatível apenas com as versões do JAVA 8 em diante.
+// Nota: O Spring Boot na versão 2.X.X é compatível apenas com as versões do JAVA 8 em diante.
 
 import br.com.releasesolutions.projetocursomc.domain.Categoria;
 import br.com.releasesolutions.projetocursomc.repositories.CategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CategoriaService {
 
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public Categoria buscarCategoria(Integer id){
+    public CategoriaService(CategoriaRepository categoriaRepository) {
+        this.categoriaRepository = categoriaRepository;
+    }
 
-        Optional<Categoria> categoria = categoriaRepository.findById(id);
+    public Categoria buscarCategoria(Integer id) {
 
-        return categoria.orElse(null);
+        Categoria categoria = categoriaRepository.findById(id).orElse(null);
+
+        if (categoria == null)
+            throw new ObjectNotFoundException("Categoria não encontrada. Id: " + id + ", Tipo: " + Categoria.class.getName());
+
+        return categoria;
     }
 }
