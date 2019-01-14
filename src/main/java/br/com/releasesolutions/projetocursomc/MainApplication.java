@@ -1,12 +1,14 @@
 package br.com.releasesolutions.projetocursomc;
 
 import br.com.releasesolutions.projetocursomc.domain.*;
+import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
 import br.com.releasesolutions.projetocursomc.domain.enums.TipoCliente;
 import br.com.releasesolutions.projetocursomc.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -18,6 +20,8 @@ public class MainApplication implements CommandLineRunner {
     private final CidadeRepository cidadeRepository;
     private final ClienteRepository clienteRepository;
     private final EnderecoRepository enderecoRepository;
+    private final PedidoRepository pedidoRepository;
+    private final PagamentoRepository pagamentoRepository;
 
     public MainApplication(
             CategoriaRepository categoriaRepository,
@@ -25,7 +29,9 @@ public class MainApplication implements CommandLineRunner {
             EstadoRepository estadoRepository,
             CidadeRepository cidadeRepository,
             ClienteRepository clienteRepository,
-            EnderecoRepository enderecoRepository
+            EnderecoRepository enderecoRepository,
+            PedidoRepository pedidoRepository,
+            PagamentoRepository pagamentoRepository
     ) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
@@ -33,6 +39,8 @@ public class MainApplication implements CommandLineRunner {
         this.cidadeRepository = cidadeRepository;
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
+        this.pedidoRepository = pedidoRepository;
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     public static void main(String[] args) {
@@ -86,5 +94,20 @@ public class MainApplication implements CommandLineRunner {
         clienteRepository.save(cliente1);
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        Pedido pedido1 = new Pedido(null, sdf.parse("14/01/2019 16:35"), cliente1, endereco1);
+        Pedido pedido2 = new Pedido(null, sdf.parse("13/01/2019 14:35"), cliente1, endereco2);
+
+        Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 10);
+        pedido1.setPagamento(pagamento1);
+
+        Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, sdf.parse("13/02/2019 10:00"), null);
+        pedido2.setPagamento(pagamento2);
+
+        cliente1.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
+
+        pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
+        pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
     }
 }
