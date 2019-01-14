@@ -22,6 +22,7 @@ public class MainApplication implements CommandLineRunner {
     private final EnderecoRepository enderecoRepository;
     private final PedidoRepository pedidoRepository;
     private final PagamentoRepository pagamentoRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
 
     public MainApplication(
             CategoriaRepository categoriaRepository,
@@ -31,7 +32,8 @@ public class MainApplication implements CommandLineRunner {
             ClienteRepository clienteRepository,
             EnderecoRepository enderecoRepository,
             PedidoRepository pedidoRepository,
-            PagamentoRepository pagamentoRepository
+            PagamentoRepository pagamentoRepository,
+            ItemPedidoRepository itemPedidoRepository
     ) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
@@ -41,6 +43,7 @@ public class MainApplication implements CommandLineRunner {
         this.enderecoRepository = enderecoRepository;
         this.pedidoRepository = pedidoRepository;
         this.pagamentoRepository = pagamentoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
     public static void main(String[] args) {
@@ -109,5 +112,18 @@ public class MainApplication implements CommandLineRunner {
 
         pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
         pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
+
+        ItemPedido itemPedido1 = new ItemPedido(pedido1, produto1, 0.00, 1, 5000.00);
+        ItemPedido itemPedido2 = new ItemPedido(pedido1, produto3, 0.00, 2, 140.00);
+        ItemPedido itemPedido3 = new ItemPedido(pedido2, produto2, 100.00, 1, 1600.00);
+
+        pedido1.getItemPedidos().addAll(Arrays.asList(itemPedido1, itemPedido2));
+        pedido2.getItemPedidos().add(itemPedido3);
+
+        produto1.getItemPedidos().add(itemPedido1);
+        produto2.getItemPedidos().add(itemPedido3);
+        produto3.getItemPedidos().add(itemPedido2);
+
+        itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
     }
 }
