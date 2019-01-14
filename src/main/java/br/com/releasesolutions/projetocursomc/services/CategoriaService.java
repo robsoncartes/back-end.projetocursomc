@@ -16,7 +16,7 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Categoria buscarCategoria(Integer id) {
+    public Categoria buscarCategoriaPorId(Integer id) {
 
         Categoria categoria = categoriaRepository.findById(id).orElse(null);
 
