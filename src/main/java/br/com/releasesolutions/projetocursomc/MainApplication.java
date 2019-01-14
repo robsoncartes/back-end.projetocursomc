@@ -1,13 +1,8 @@
 package br.com.releasesolutions.projetocursomc;
 
-import br.com.releasesolutions.projetocursomc.domain.Categoria;
-import br.com.releasesolutions.projetocursomc.domain.Cidade;
-import br.com.releasesolutions.projetocursomc.domain.Estado;
-import br.com.releasesolutions.projetocursomc.domain.Produto;
-import br.com.releasesolutions.projetocursomc.repositories.CategoriaRepository;
-import br.com.releasesolutions.projetocursomc.repositories.CidadeRepository;
-import br.com.releasesolutions.projetocursomc.repositories.EstadoRepository;
-import br.com.releasesolutions.projetocursomc.repositories.ProdutoRepository;
+import br.com.releasesolutions.projetocursomc.domain.*;
+import br.com.releasesolutions.projetocursomc.domain.enums.TipoCliente;
+import br.com.releasesolutions.projetocursomc.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,17 +16,23 @@ public class MainApplication implements CommandLineRunner {
     private final ProdutoRepository produtoRepository;
     private final EstadoRepository estadoRepository;
     private final CidadeRepository cidadeRepository;
+    private final ClienteRepository clienteRepository;
+    private final EnderecoRepository enderecoRepository;
 
     public MainApplication(
             CategoriaRepository categoriaRepository,
             ProdutoRepository produtoRepository,
             EstadoRepository estadoRepository,
-            CidadeRepository cidadeRepository
+            CidadeRepository cidadeRepository,
+            ClienteRepository clienteRepository,
+            EnderecoRepository enderecoRepository
     ) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
         this.estadoRepository = estadoRepository;
         this.cidadeRepository = cidadeRepository;
+        this.clienteRepository = clienteRepository;
+        this.enderecoRepository = enderecoRepository;
     }
 
     public static void main(String[] args) {
@@ -72,5 +73,18 @@ public class MainApplication implements CommandLineRunner {
 
         estadoRepository.saveAll(Arrays.asList(estado1, estado2));
         cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
+
+        Cliente cliente1 = new Cliente(null, "Robson Sousa", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA);
+
+        cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
+
+        Endereco endereco1 = new Endereco(null, "Rua Felisbina", "383", "casa", "Jardim Imperial", "12234-070", cliente1, cidade1);
+        Endereco endereco2 = new Endereco(null, "Rua Estados Unidos", "2001", "apto 11", "Jardim Paulista", "05212-060", cliente1, cidade2);
+
+        cliente1.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
+
+        clienteRepository.save(cliente1);
+        enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+
     }
 }
