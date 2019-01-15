@@ -1,7 +1,5 @@
 package br.com.releasesolutions.projetocursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ public class Categoria implements Serializable {
         Utiliza-se a anotação @JsonManagedReference no lado que se deseja obter os objetos associados, evitando assim,
         o que se chama de referência ciclíca.
      */
-    @JsonManagedReference
+
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 

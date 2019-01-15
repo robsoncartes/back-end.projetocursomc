@@ -1,6 +1,5 @@
 package br.com.releasesolutions.projetocursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ public class Produto implements Serializable {
         Utiliza-se a anotação @JsonBackReference quando do outro lado da associação (Produto e Categoria) quando os
         objetos já foram buscados, não tendo portanto a necessidade de busca-los novamente.
      */
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias = new ArrayList<>();
@@ -40,10 +39,10 @@ public class Produto implements Serializable {
     }
 
     @JsonIgnore
-    public List<Pedido> getPedidos(){
+    public List<Pedido> getPedidos() {
         List<Pedido> pedidos = new ArrayList<>();
 
-        for (ItemPedido x : itemPedidos){
+        for (ItemPedido x : itemPedidos) {
             pedidos.add(x.getPedido());
         }
 
