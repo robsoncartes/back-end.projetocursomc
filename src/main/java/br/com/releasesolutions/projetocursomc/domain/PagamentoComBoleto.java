@@ -1,6 +1,7 @@
 package br.com.releasesolutions.projetocursomc.domain;
 
 import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Entity;
 import java.util.Date;
@@ -10,24 +11,27 @@ public class PagamentoComBoleto extends Pagamento {
 
     private static final long serialVersionUID = 1L;
 
-    private Date dataVenciomento;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date dataVencimento;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataPagamento;
 
     public PagamentoComBoleto() {
     }
 
-    public PagamentoComBoleto(Integer id, EstadoPagamento estadoPagamento, Pedido pedido, Date dataVenciomento, Date dataPagamento) {
+    public PagamentoComBoleto(Integer id, EstadoPagamento estadoPagamento, Pedido pedido, Date dataVencimento, Date dataPagamento) {
         super(id, estadoPagamento, pedido);
-        this.dataVenciomento = dataVenciomento;
+        this.dataVencimento = dataVencimento;
         this.dataPagamento = dataPagamento;
     }
 
-    public Date getDataVenciomento() {
-        return dataVenciomento;
+    public Date getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setDataVenciomento(Date dataVenciomento) {
-        this.dataVenciomento = dataVenciomento;
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 
     public Date getDataPagamento() {
