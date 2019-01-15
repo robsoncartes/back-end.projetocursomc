@@ -17,7 +17,6 @@ public class CategoriaService {
     }
 
     public Categoria buscarCategoriaPorId(Integer id) {
-
         Categoria categoria = categoriaRepository.findById(id).orElse(null);
 
         if (categoria == null)
@@ -28,6 +27,12 @@ public class CategoriaService {
 
     public Categoria inserirCategoria(Categoria categoria){
         categoria.setId(null);
+
+        return categoriaRepository.save(categoria);
+    }
+
+    public Categoria atualizarCategoria(Categoria categoria){
+        buscarCategoriaPorId(categoria.getId());
 
         return categoriaRepository.save(categoria);
     }
