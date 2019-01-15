@@ -3,6 +3,7 @@ package br.com.releasesolutions.projetocursomc.services;
 // Nota: O Spring Boot na versão 2.X.X é compatível apenas com as versões do JAVA 8 em diante.
 
 import br.com.releasesolutions.projetocursomc.domain.Categoria;
+import br.com.releasesolutions.projetocursomc.dto.CategoriaDTO;
 import br.com.releasesolutions.projetocursomc.repositories.CategoriaRepository;
 import br.com.releasesolutions.projetocursomc.services.exceptions.DataIntegrityException;
 import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFoundException;
@@ -64,5 +65,9 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria fromCatetoriaDTO(CategoriaDTO categoriaDTO){
+        return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
     }
 }
