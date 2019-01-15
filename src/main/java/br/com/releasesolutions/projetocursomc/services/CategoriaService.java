@@ -25,4 +25,10 @@ public class CategoriaService {
 
         return categoria;
     }
+
+    public Categoria inserirCategoria(Categoria categoria){
+        categoria.setId(null);
+
+        return categoriaRepository.save(categoria);
+    }
 }
