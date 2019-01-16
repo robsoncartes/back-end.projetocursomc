@@ -1,14 +1,16 @@
 package br.com.releasesolutions.projetocursomc.resources;
 
 import br.com.releasesolutions.projetocursomc.domain.Cliente;
-import br.com.releasesolutions.projetocursomc.domain.Cliente;
 import br.com.releasesolutions.projetocursomc.dto.ClienteDTO;
+import br.com.releasesolutions.projetocursomc.dto.ClienteNewDTO;
 import br.com.releasesolutions.projetocursomc.services.ClienteService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,16 @@ public class ClienteResource {
         Cliente cliente = clienteService.buscarClientePorId(id);
 
         return ResponseEntity.ok().body(cliente);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insertCliente(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
+
+        Cliente cliente = clienteService.fromClienteNewDTO(clienteNewDTO);
+        clienteService.inserirCliente(cliente);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
