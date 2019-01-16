@@ -33,41 +33,45 @@ public class CategoriaService {
         return categoria;
     }
 
-    public Categoria inserirCategoria(Categoria categoria){
+    public Categoria inserirCategoria(Categoria categoria) {
         categoria.setId(null);
 
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria atualizarCategoria(Categoria categoria){
-        buscarCategoriaPorId(categoria.getId());
+    public Categoria atualizarCategoria(Categoria categoria) {
+        Categoria newCategoria = buscarCategoriaPorId(categoria.getId());
+        updateData(newCategoria, categoria);
 
-        return categoriaRepository.save(categoria);
+        return categoriaRepository.save(newCategoria);
     }
 
-    public void deletarCategoriaPorId(Integer id){
+    public void deletarCategoriaPorId(Integer id) {
         buscarCategoriaPorId(id);
-        try{
+        try {
             categoriaRepository.deleteById(id);
-        }
-        catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos.");
         }
     }
 
-    public List<Categoria> buscarTodasCategorias(){
+    public List<Categoria> buscarTodasCategorias() {
 
         return categoriaRepository.findAll();
     }
 
-    public Page<Categoria> buscarPagina(Integer page, Integer linesPerPage, String orderBy, String direction){
+    public Page<Categoria> buscarPagina(Integer page, Integer linesPerPage, String orderBy, String direction) {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
         return categoriaRepository.findAll(pageRequest);
     }
 
-    public Categoria fromCategoriaDTO(CategoriaDTO categoriaDTO){
+    public Categoria fromCategoriaDTO(CategoriaDTO categoriaDTO) {
         return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+    }
+
+    private void updateData(Categoria newCategoria, Categoria categoria) {
+        newCategoria.setNome(categoria.getNome());
     }
 }
