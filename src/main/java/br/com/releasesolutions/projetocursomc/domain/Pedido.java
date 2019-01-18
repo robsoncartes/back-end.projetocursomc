@@ -92,6 +92,18 @@ public class Pedido implements Serializable {
         this.itemPedidos = itemPedidos;
     }
 
+    public double getValorTotal(){
+
+        return itemPedidos.stream().mapToDouble(ItemPedido::getSubTotal).sum();
+
+        /* ou
+        double soma = 0.0;
+        for (ItemPedido itemPedido : itemPedidos)
+            soma += itemPedido.getSubTotal();
+        return soma;
+        */
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
