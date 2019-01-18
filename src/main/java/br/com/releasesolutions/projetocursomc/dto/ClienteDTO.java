@@ -1,12 +1,14 @@
 package br.com.releasesolutions.projetocursomc.dto;
 
 import br.com.releasesolutions.projetocursomc.domain.Cliente;
+import br.com.releasesolutions.projetocursomc.services.validations.ClienteUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +26,7 @@ public class ClienteDTO implements Serializable {
     public ClienteDTO() {
     }
 
-    public ClienteDTO(Cliente cliente){
+    public ClienteDTO(Cliente cliente) {
         this.id = cliente.getId();
         this.nome = cliente.getNome();
         this.email = cliente.getEmail();
