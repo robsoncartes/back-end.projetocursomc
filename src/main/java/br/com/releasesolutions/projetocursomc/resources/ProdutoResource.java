@@ -1,8 +1,6 @@
 package br.com.releasesolutions.projetocursomc.resources;
 
-import br.com.releasesolutions.projetocursomc.domain.Categoria;
 import br.com.releasesolutions.projetocursomc.domain.Produto;
-import br.com.releasesolutions.projetocursomc.dto.CategoriaDTO;
 import br.com.releasesolutions.projetocursomc.dto.ProdutoDTO;
 import br.com.releasesolutions.projetocursomc.resources.utils.URL;
 import br.com.releasesolutions.projetocursomc.services.ProdutoService;

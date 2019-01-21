@@ -32,7 +32,7 @@ public class Pedido implements Serializable {
     private Endereco enderecoDeEntrega;
 
     @OneToMany(mappedBy = "id.pedido")
-    private Set<ItemPedido> itemPedidos = new HashSet<>();
+    private Set<ItemPedido> itensPedidos = new HashSet<>();
 
     public Pedido() {
     }
@@ -84,21 +84,21 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    public Set<ItemPedido> getItemPedidos() {
-        return itemPedidos;
+    public Set<ItemPedido> getItensPedidos() {
+        return itensPedidos;
     }
 
-    public void setItemPedidos(Set<ItemPedido> itemPedidos) {
-        this.itemPedidos = itemPedidos;
+    public void setItensPedidos(Set<ItemPedido> itensPedidos) {
+        this.itensPedidos = itensPedidos;
     }
 
-    public double getValorTotal(){
+    public double getValorTotal() {
 
-        return itemPedidos.stream().mapToDouble(ItemPedido::getSubTotal).sum();
+        return itensPedidos.stream().mapToDouble(ItemPedido::getSubTotal).sum();
 
         /* ou
         double soma = 0.0;
-        for (ItemPedido itemPedido : itemPedidos)
+        for (ItemPedido itemPedido : itensPedidos)
             soma += itemPedido.getSubTotal();
         return soma;
         */

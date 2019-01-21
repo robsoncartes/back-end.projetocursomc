@@ -143,12 +143,12 @@ public class MainApplication implements CommandLineRunner {
         ItemPedido itemPedido2 = new ItemPedido(pedido1, produto3, 0.00, 2, 80.00);
         ItemPedido itemPedido3 = new ItemPedido(pedido2, produto2, 100.00, 1, 800.00);
 
-        pedido1.getItemPedidos().addAll(Arrays.asList(itemPedido1, itemPedido2));
-        pedido2.getItemPedidos().add(itemPedido3);
+        pedido1.getItensPedidos().addAll(Arrays.asList(itemPedido1, itemPedido2));
+        pedido2.getItensPedidos().add(itemPedido3);
 
-        produto1.getItemPedidos().add(itemPedido1);
-        produto2.getItemPedidos().add(itemPedido3);
-        produto3.getItemPedidos().add(itemPedido2);
+        produto1.getItensPedidos().add(itemPedido1);
+        produto2.getItensPedidos().add(itemPedido3);
+        produto3.getItensPedidos().add(itemPedido2);
 
         itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
     }

@@ -2,12 +2,14 @@ package br.com.releasesolutions.projetocursomc.domain;
 
 import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 public abstract class Pagamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,10 +24,10 @@ public abstract class Pagamento implements Serializable {
     @MapsId
     private Pedido pedido;
 
-    public Pagamento() {
+    Pagamento() {
     }
 
-    public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
+    Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
         this.id = id;
         this.estadoPagamento = (estadoPagamento == null) ? null : estadoPagamento.getCodigo();
         this.pedido = pedido;
