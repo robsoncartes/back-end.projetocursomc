@@ -12,9 +12,21 @@ pipelines:
           - maven
         script: # Modify the commands below to build your repository.
           - mvn -B verify # -B batch mode makes Maven less verbose
+        services:
+          - mysql
     - step:
         name: Deploy to test
         deployment: test
         # trigger: manual # Uncomment to make this a manual deployment.
         script:
           - echo "Deploying to test environment"
+
+definitions:
+  services:
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: 'projetocursomc'
+        MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+        MYSQL_USER: 'aluno'
+        MYSQL_PASSWORD: 'aluno'
