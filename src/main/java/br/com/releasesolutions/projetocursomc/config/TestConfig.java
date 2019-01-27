@@ -26,7 +26,7 @@ public class TestConfig {
     }
 
     @Bean
-    EmailService emailService(){
+    EmailService getEmailService(){
 
         return new MockEmailService();
     }
