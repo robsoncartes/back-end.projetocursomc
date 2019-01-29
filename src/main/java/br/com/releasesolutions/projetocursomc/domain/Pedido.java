@@ -98,13 +98,6 @@ public class Pedido implements Serializable {
     public double getValorTotal() {
 
         return itensPedidos.stream().mapToDouble(ItemPedido::getSubTotal).sum();
-
-        /* ou
-        double soma = 0.0;
-        for (ItemPedido itemPedido : itensPedidos)
-            soma += itemPedido.getSubTotal();
-        return soma;
-        */
     }
 
     @Override
@@ -127,18 +120,15 @@ public class Pedido implements Serializable {
 
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-
         final StringBuilder sb = new StringBuilder();
 
-        sb.append("Pedido número: ").append(getId());
-        sb.append("\tInstante: ").append(sdf.format(getInstante()));
-        sb.append("\tCliente: ").append(getCliente().getNome());
-        sb.append("\tSituação do pagamento: ").append(getPagamento().getEstadoPagamento().getDescricao());
-        sb.append("\nDetalhes: \n");
+        sb.append("Pedido número: ").append(getId())
+                .append("\tInstante: ").append(sdf.format(getInstante()))
+                .append("\tCliente: ").append(getCliente().getNome())
+                .append("\tSituação do pagamento: ").append(getPagamento().getEstadoPagamento().getDescricao())
+                .append("\nDetalhes: \n");
 
-        for (ItemPedido itemPedido : getItensPedidos())
-            sb.append(itemPedido.toString());
-
+        itensPedidos.forEach(sb::append);
         sb.append("Valor total: ").append(nf.format(getValorTotal()));
 
         return sb.toString();

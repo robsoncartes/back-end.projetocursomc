@@ -55,7 +55,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido inserirPedido(Pedido pedido){
+    public Pedido inserirPedido(Pedido pedido) {
 
         pedido.setId(null);
         pedido.setInstante(new Date());
@@ -63,7 +63,7 @@ public class PedidoService {
         pedido.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
         pedido.getPagamento().setPedido(pedido);
 
-        if (pedido.getPagamento() instanceof PagamentoComBoleto){
+        if (pedido.getPagamento() instanceof PagamentoComBoleto) {
             PagamentoComBoleto pagamentoComBoleto = (PagamentoComBoleto) pedido.getPagamento();
             boletoService.preencherPagamentoComBoleto(pagamentoComBoleto, pedido.getInstante());
         }
@@ -71,7 +71,7 @@ public class PedidoService {
         pedidoRepository.save(pedido);
         pagamentoRepository.save(pedido.getPagamento());
 
-        for (ItemPedido itemPedido : pedido.getItensPedidos()){
+        for (ItemPedido itemPedido : pedido.getItensPedidos()) {
             itemPedido.setDesconto(0.0);
             itemPedido.setProduto(produtoService.buscarProdutoPorId(itemPedido.getProduto().getId()));
             itemPedido.setPreco(itemPedido.getProduto().getPreco());
@@ -79,7 +79,7 @@ public class PedidoService {
         }
 
         itemPedidoRepository.saveAll(pedido.getItensPedidos());
-        emailService.sendOrderConfirmationEmail(pedido);
+        emailService.sendOrderConfirmationHtmlEmail(pedido);
 
         return pedido;
     }

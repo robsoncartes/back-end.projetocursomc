@@ -26,6 +26,7 @@ public class ItemPedido implements Serializable {
     }
 
     public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
+        super();
         this.id.setPedido(pedido);
         this.id.setProduto(produto);
         this.desconto = desconto;
@@ -82,7 +83,7 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
-    double getSubTotal() {
+    public double getSubTotal() {
 
         return (preco - desconto) * quantidade;
     }
@@ -102,15 +103,8 @@ public class ItemPedido implements Serializable {
 
     @Override
     public String toString() {
-
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        final StringBuilder sb = new StringBuilder();
 
-        sb.append(getProduto().getNome());
-        sb.append("\tQuantidade: ").append(getQuantidade());
-        sb.append("\tPreço: ").append(nf.format(getPreco()));
-        sb.append("\tSubTotal: ").append(nf.format(getSubTotal()) + "\n");
-
-        return sb.toString();
+        return getProduto().getNome() + "\tQuantidade: " + getQuantidade() + "\tPreço unitário: " + getPreco() + "\tSubTotal: " + nf.format(getSubTotal()) + "\n";
     }
 }
