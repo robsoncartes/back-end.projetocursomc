@@ -2,6 +2,7 @@ package br.com.releasesolutions.projetocursomc.services;
 
 import br.com.releasesolutions.projetocursomc.domain.*;
 import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
+import br.com.releasesolutions.projetocursomc.domain.enums.Perfil;
 import br.com.releasesolutions.projetocursomc.domain.enums.TipoCliente;
 import br.com.releasesolutions.projetocursomc.repositories.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
 
 @Service
 public class DBService {
@@ -99,24 +101,30 @@ public class DBService {
         Cidade cidade1 = new Cidade(null, "São José dos Campos", estado1);
         Cidade cidade2 = new Cidade(null, "São Paulo", estado1);
         Cidade cidade3 = new Cidade(null, "Rio de Janeiro", estado2);
+        Cidade cidade4 = new Cidade(null, "Campos do Jordão", estado1);
 
 
-        estado1.getCidades().addAll(Arrays.asList(cidade1, cidade2));
+        estado1.getCidades().addAll(Arrays.asList(cidade1, cidade2, cidade4));
         estado2.getCidades().add(cidade3);
 
         estadoRepository.saveAll(Arrays.asList(estado1, estado2));
-        cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
+        cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3, cidade4));
 
         Cliente cliente1 = new Cliente(null, "Robson Sousa", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
+        Cliente cliente2 = new Cliente(null, "Robson Cartes", "robsoncartes@outlook.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
 
         cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
+        cliente2.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
 
         Endereco endereco1 = new Endereco(null, "Rua Felisbina", "383", "casa", "Jardim Imperial", "12234-070", cliente1, cidade1);
         Endereco endereco2 = new Endereco(null, "Rua Estados Unidos", "2001", "apto 11", "Jardim Paulista", "05212-060", cliente1, cidade2);
+        Endereco endereco3 = new Endereco(null, "Rua Comendador José Schaffer", "1675", "casa", "Vila Inglesa", "12460-000", cliente2, cidade4);
 
         cliente1.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
+        cliente2.getEnderecos().add(endereco3);
+        cliente2.addPerfil(Perfil.ADMIN);
 
-        clienteRepository.save(cliente1);
+        clienteRepository.saveAll(Arrays.asList(cliente1, cliente2));
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
