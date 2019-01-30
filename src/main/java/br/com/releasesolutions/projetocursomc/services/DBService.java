@@ -4,6 +4,7 @@ import br.com.releasesolutions.projetocursomc.domain.*;
 import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
 import br.com.releasesolutions.projetocursomc.domain.enums.TipoCliente;
 import br.com.releasesolutions.projetocursomc.repositories.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ public class DBService {
     private final PedidoRepository pedidoRepository;
     private final PagamentoRepository pagamentoRepository;
     private final ItemPedidoRepository itemPedidoRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public DBService(
             CategoriaRepository categoriaRepository,
@@ -31,7 +33,8 @@ public class DBService {
             EnderecoRepository enderecoRepository,
             PedidoRepository pedidoRepository,
             PagamentoRepository pagamentoRepository,
-            ItemPedidoRepository itemPedidoRepository
+            ItemPedidoRepository itemPedidoRepository,
+            BCryptPasswordEncoder passwordEncoder
     ) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
@@ -42,6 +45,7 @@ public class DBService {
         this.pedidoRepository = pedidoRepository;
         this.pagamentoRepository = pagamentoRepository;
         this.itemPedidoRepository = itemPedidoRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void instantiateTestDatabase() throws Exception {
@@ -103,7 +107,7 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(estado1, estado2));
         cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
-        Cliente cliente1 = new Cliente(null, "Robson Sousa", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA);
+        Cliente cliente1 = new Cliente(null, "Robson Sousa", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
 
         cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
 
