@@ -10,6 +10,7 @@ import br.com.releasesolutions.projetocursomc.repositories.ItemPedidoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.PagamentoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.PedidoRepository;
 import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,9 @@ import java.util.Date;
 
 @Service
 public class PedidoService {
+
+    @Value("${spring.profiles.active}")
+    private String perfilAtivo;
 
     private final PedidoRepository pedidoRepository;
     private final BoletoService boletoService;
@@ -79,7 +83,11 @@ public class PedidoService {
         }
 
         itemPedidoRepository.saveAll(pedido.getItensPedidos());
-        emailService.sendOrderConfirmationHtmlEmail(pedido);
+
+        if ("test".equals(perfilAtivo))
+            emailService.sendOrderConfirmationEmail(pedido);
+        else
+            emailService.sendOrderConfirmationHtmlEmail(pedido);
 
         return pedido;
     }

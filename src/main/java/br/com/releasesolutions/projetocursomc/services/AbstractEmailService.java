@@ -16,7 +16,6 @@ import java.util.Date;
 
 public abstract class AbstractEmailService implements EmailService {
 
-
     @Value("${default.sender}")
     private String sender;
 
