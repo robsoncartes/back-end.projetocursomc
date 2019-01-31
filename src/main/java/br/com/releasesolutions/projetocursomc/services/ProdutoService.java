@@ -35,7 +35,7 @@ public class ProdutoService {
         return produto;
     }
 
-    public Page<Produto> pesquisarProduto(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction){
+    public Page<Produto> pesquisarProduto(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         List<Categoria> categorias = categoriaRepository.findAllById(ids);
