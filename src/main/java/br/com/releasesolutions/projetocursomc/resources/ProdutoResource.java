@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(value = "/produtos")
 public class ProdutoResource {
 
-    private final ProdutoService produtoService;
+    private ProdutoService produtoService;
 
     public ProdutoResource(ProdutoService produtoService) {
         this.produtoService = produtoService;

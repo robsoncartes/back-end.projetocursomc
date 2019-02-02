@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    private final CategoriaService categoriaService;
+    private CategoriaService categoriaService;
 
     public CategoriaResource(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;

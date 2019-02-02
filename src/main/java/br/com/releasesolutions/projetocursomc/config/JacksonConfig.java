@@ -11,11 +11,11 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 public class JacksonConfig {
 
     @Bean
-    public Jackson2ObjectMapperBuilder objectMapperBuilder(){
+    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
 
-        return new Jackson2ObjectMapperBuilder(){
+        return new Jackson2ObjectMapperBuilder() {
 
-            public void configure(ObjectMapper objectMapper){
+            public void configure(ObjectMapper objectMapper) {
                 objectMapper.registerSubtypes(PagamentoComBoleto.class);
                 objectMapper.registerSubtypes(PagamentoComCartao.class);
                 super.configure(objectMapper);

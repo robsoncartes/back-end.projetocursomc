@@ -13,7 +13,7 @@ import java.net.URI;
 @RequestMapping(value = "/pedidos")
 public class PedidoResource {
 
-    private final PedidoService pedidoService;
+    private PedidoService pedidoService;
 
     public PedidoResource(PedidoService pedidoService) {
         this.pedidoService = pedidoService;

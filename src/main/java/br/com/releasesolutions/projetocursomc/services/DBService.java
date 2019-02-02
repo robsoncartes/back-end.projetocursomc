@@ -14,16 +14,16 @@ import java.util.Arrays;
 @Service
 public class DBService {
 
-    private final CategoriaRepository categoriaRepository;
-    private final ProdutoRepository produtoRepository;
-    private final EstadoRepository estadoRepository;
-    private final CidadeRepository cidadeRepository;
-    private final ClienteRepository clienteRepository;
-    private final EnderecoRepository enderecoRepository;
-    private final PedidoRepository pedidoRepository;
-    private final PagamentoRepository pagamentoRepository;
-    private final ItemPedidoRepository itemPedidoRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private CategoriaRepository categoriaRepository;
+    private ProdutoRepository produtoRepository;
+    private EstadoRepository estadoRepository;
+    private CidadeRepository cidadeRepository;
+    private ClienteRepository clienteRepository;
+    private EnderecoRepository enderecoRepository;
+    private PedidoRepository pedidoRepository;
+    private PagamentoRepository pagamentoRepository;
+    private ItemPedidoRepository itemPedidoRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
     public DBService(
             CategoriaRepository categoriaRepository,
@@ -102,7 +102,6 @@ public class DBService {
         Cidade cidade3 = new Cidade(null, "Rio de Janeiro", estado2);
         Cidade cidade4 = new Cidade(null, "Campos do Jordão", estado1);
 
-
         estado1.getCidades().addAll(Arrays.asList(cidade1, cidade2, cidade4));
         estado2.getCidades().add(cidade3);
 
@@ -117,14 +116,16 @@ public class DBService {
 
         Endereco endereco1 = new Endereco(null, "Rua Felisbina", "383", "casa", "Jardim Imperial", "12234-070", cliente1, cidade1);
         Endereco endereco2 = new Endereco(null, "Rua Estados Unidos", "2001", "apto 11", "Jardim Paulista", "05212-060", cliente1, cidade2);
-        Endereco endereco3 = new Endereco(null, "Rua Comendador José Schaffer", "1675", "casa", "Vila Inglesa", "12460-000", cliente2, cidade4);
+        Endereco endereco3 = new Endereco(null, "Rua Rio", "40", "171", "Mil graus", "05212-060", cliente2, cidade3);
+        Endereco endereco4 = new Endereco(null, "Rua Comendador José Schaffer", "1675", "casa", "Vila Inglesa", "12460-000", cliente2, cidade4);
+        //Endereco endereco4 = new Endereco(null, "Rua Rio", "40", "casa", "Leblon", "12345-000", cliente2, cidade3);
 
         cliente1.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
-        cliente2.getEnderecos().add(endereco3);
+        cliente2.getEnderecos().addAll(Arrays.asList(endereco3, endereco4));
         cliente2.addPerfil(Perfil.ADMIN);
 
         clienteRepository.saveAll(Arrays.asList(cliente1, cliente2));
-        enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+        enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3, endereco4));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

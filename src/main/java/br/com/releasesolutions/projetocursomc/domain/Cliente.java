@@ -125,12 +125,12 @@ public class Cliente implements Serializable {
         this.telefones = telefones;
     }
 
-    public Set<Perfil> getPerfis(){
+    public Set<Perfil> getPerfis() {
 
         return perfis.stream().map(Perfil::toEnum).collect(Collectors.toSet());
     }
 
-    public void addPerfil(Perfil perfil){
+    public void addPerfil(Perfil perfil) {
         perfis.add(perfil.getCodigo());
     }
 

@@ -38,9 +38,8 @@ public class ResourceExceptionHandler {
         ValidationError error =
                 new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação.", System.currentTimeMillis());
 
-        for (FieldError x : exception.getBindingResult().getFieldErrors()){
+        for (FieldError x : exception.getBindingResult().getFieldErrors())
             error.addError(x.getField(), x.getDefaultMessage());
-        }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

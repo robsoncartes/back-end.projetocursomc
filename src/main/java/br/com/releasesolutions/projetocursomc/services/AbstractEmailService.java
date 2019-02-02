@@ -1,6 +1,7 @@
 package br.com.releasesolutions.projetocursomc.services;
 
 import br.com.releasesolutions.projetocursomc.domain.Pedido;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,24 +19,11 @@ public abstract class AbstractEmailService implements EmailService {
     @Value("${default.sender}")
     private String sender;
 
+    @Autowired
     private TemplateEngine templateEngine;
+
+    @Autowired
     private JavaMailSender javaMailSender;
-
-    public TemplateEngine getTemplateEngine() {
-        return templateEngine;
-    }
-
-    public JavaMailSender getJavaMailSender() {
-        return javaMailSender;
-    }
-
-    public void setTemplateEngine(TemplateEngine templateEngine) {
-        this.templateEngine = templateEngine;
-    }
-
-    public void setJavaMailSender(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
 
     @Override
     public void sendOrderConfirmationEmail(Pedido pedido) {
@@ -63,7 +51,7 @@ public abstract class AbstractEmailService implements EmailService {
         Context context = new Context();
         context.setVariable("pedido", pedido);
 
-        return getTemplateEngine().process("email/confirmacaoPedido", context);
+        return templateEngine.process("email/confirmacaoPedido", context);
     }
 
     @Override
@@ -79,7 +67,7 @@ public abstract class AbstractEmailService implements EmailService {
 
     protected MimeMessage prepareMimeMessageFromPedido(Pedido pedido) throws MessagingException {
 
-        MimeMessage mimeMessage = getJavaMailSender().createMimeMessage();
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true);
 
         messageHelper.setTo(pedido.getCliente().getEmail());

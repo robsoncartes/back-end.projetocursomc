@@ -22,13 +22,13 @@ public class PedidoService {
     @Value("${spring.profiles.active}")
     private String perfilAtivo;
 
-    private final PedidoRepository pedidoRepository;
-    private final BoletoService boletoService;
-    private final PagamentoRepository pagamentoRepository;
-    private final ProdutoService produtoService;
-    private final ItemPedidoRepository itemPedidoRepository;
-    private final ClienteService clienteService;
-    private final EmailService emailService;
+    private PedidoRepository pedidoRepository;
+    private BoletoService boletoService;
+    private PagamentoRepository pagamentoRepository;
+    private ProdutoService produtoService;
+    private ItemPedidoRepository itemPedidoRepository;
+    private ClienteService clienteService;
+    private EmailService emailService;
 
     public PedidoService(
             PedidoRepository pedidoRepository,

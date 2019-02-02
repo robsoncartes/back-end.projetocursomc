@@ -9,7 +9,7 @@ import java.util.Date;
 @Service
 public class BoletoService {
 
-     void preencherPagamentoComBoleto(PagamentoComBoleto pagamentoComBoleto, Date instanteDoPedido){
+    void preencherPagamentoComBoleto(PagamentoComBoleto pagamentoComBoleto, Date instanteDoPedido) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(instanteDoPedido);

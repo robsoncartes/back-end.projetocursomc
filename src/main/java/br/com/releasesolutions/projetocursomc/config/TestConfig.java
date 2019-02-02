@@ -13,7 +13,7 @@ public class TestConfig {
 
     private DBService dbService;
 
-    public TestConfig(DBService dbService){
+    public TestConfig(DBService dbService) {
         this.dbService = dbService;
     }
 
@@ -26,7 +26,7 @@ public class TestConfig {
     }
 
     @Bean
-    EmailService getEmailService(){
+    EmailService getEmailService() {
 
         return new MockEmailService();
     }

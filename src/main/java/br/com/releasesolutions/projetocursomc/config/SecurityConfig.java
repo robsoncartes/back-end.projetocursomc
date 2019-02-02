@@ -1,8 +1,8 @@
 package br.com.releasesolutions.projetocursomc.config;
 
 import br.com.releasesolutions.projetocursomc.security.JWTAuthenticationFilter;
+import br.com.releasesolutions.projetocursomc.security.JWTAuthorizationFilter;
 import br.com.releasesolutions.projetocursomc.security.JWTUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -28,14 +28,13 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    /**
+     * Creates an instance with the default configuration enabled.
+     */
 
-    @Autowired
     private Environment environment;
-
-    @Autowired
+    //@Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
-
-    @Autowired
     private JWTUtil jwtUtil;
 
     private static final String[] PUBLIC_MATCHERS = {
@@ -47,6 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/categorias/**",
             "/clientes/**"
     };
+
+    public SecurityConfig(Environment environment, UserDetailsService userDetailsService, JWTUtil jwtUtil) {
+        this.environment = environment;
+        this.userDetailsService = userDetailsService;
+        this.jwtUtil = jwtUtil;
+    }
 
     /**
      * Override this method to configure the {@link HttpSecurity}. Typically subclasses
@@ -60,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param http the {@link HttpSecurity} to modify
      * @throws Exception if an error occurs
      */
+
 
     // Obs.: de modo geral é possível desabilitar proteção a ataques Cross-Site Request Forgery (CSRF) em sistemas stateless.
     @Override
@@ -76,10 +82,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    // configureAuthenticationManagerBuild
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 

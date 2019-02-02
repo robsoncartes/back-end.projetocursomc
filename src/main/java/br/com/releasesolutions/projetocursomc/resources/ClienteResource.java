@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
 
-    private final ClienteService clienteService;
+    private ClienteService clienteService;
 
     public ClienteResource(ClienteService clienteService) {
         this.clienteService = clienteService;

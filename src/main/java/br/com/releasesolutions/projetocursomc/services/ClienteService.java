@@ -25,9 +25,9 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    private final ClienteRepository clienteRepository;
-    private final EnderecoRepository enderecoRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private ClienteRepository clienteRepository;
+    private EnderecoRepository enderecoRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
     public ClienteService(ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder passwordEncoder) {
         this.clienteRepository = clienteRepository;
