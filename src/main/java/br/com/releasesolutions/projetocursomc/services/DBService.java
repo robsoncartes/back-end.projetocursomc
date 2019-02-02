@@ -108,8 +108,8 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(estado1, estado2));
         cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3, cidade4));
 
-        Cliente cliente1 = new Cliente(null, "Robson Sousa", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
-        Cliente cliente2 = new Cliente(null, "Robson Cartes", "robsoncartes@outlook.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
+        Cliente cliente1 = new Cliente(null, "Cliente 1", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
+        Cliente cliente2 = new Cliente(null, "Admin", "robsoncartes@outlook.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
 
         cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
         cliente2.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
