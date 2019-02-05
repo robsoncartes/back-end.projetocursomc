@@ -2,15 +2,22 @@ package br.com.releasesolutions.projetocursomc.services;
 
 // Nota: O Spring Boot na versão 2.X.X é compatível apenas com as versões do JAVA 8 em diante.
 
+import br.com.releasesolutions.projetocursomc.domain.Cliente;
 import br.com.releasesolutions.projetocursomc.domain.ItemPedido;
 import br.com.releasesolutions.projetocursomc.domain.PagamentoComBoleto;
 import br.com.releasesolutions.projetocursomc.domain.Pedido;
 import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
+import br.com.releasesolutions.projetocursomc.domain.enums.Perfil;
 import br.com.releasesolutions.projetocursomc.repositories.ItemPedidoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.PagamentoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.PedidoRepository;
+import br.com.releasesolutions.projetocursomc.security.UserSS;
+import br.com.releasesolutions.projetocursomc.services.exceptions.AuthorizationException;
 import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +62,11 @@ public class PedidoService {
         if (pedido == null)
             throw new ObjectNotFoundException("Pedido não encontrado. Id: " + id + ", Tipo: " + Pedido.class.getName());
 
+        UserSS userSS = UserService.getUserAuthenticated();
+
+        if (userSS == null || !userSS.hasRole(Perfil.ADMIN) && !pedido.getCliente().getId().equals(userSS.getId()))
+            throw new AuthorizationException("Acesso negado.");
+
         return pedido;
     }
 
@@ -90,5 +102,18 @@ public class PedidoService {
             emailService.sendOrderConfirmationHtmlEmail(pedido);
 
         return pedido;
+    }
+
+    public Page<Pedido> buscarPagina(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
+        UserSS userSS = UserService.getUserAuthenticated();
+
+        if (userSS == null)
+            throw new AuthorizationException("Acesso negado.");
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        Cliente cliente = clienteService.buscarClientePorId(userSS.getId());
+
+        return pedidoRepository.findByCliente(cliente, pageRequest);
     }
 }
