@@ -1,5 +1,6 @@
 package br.com.releasesolutions.projetocursomc.services;
 
+import br.com.releasesolutions.projetocursomc.domain.Cliente;
 import br.com.releasesolutions.projetocursomc.domain.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,5 +78,24 @@ public abstract class AbstractEmailService implements EmailService {
         messageHelper.setText(htmlFromTemplatePedido(pedido), true);
 
         return mimeMessage;
+    }
+
+    @Override
+    public void sendNewPasswordEmail(Cliente cliente, String newPassword) {
+
+        SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPassword);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPassword) {
+
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(cliente.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitação de nova senha.");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova senha: " + newPassword);
+
+        return sm;
     }
 }
