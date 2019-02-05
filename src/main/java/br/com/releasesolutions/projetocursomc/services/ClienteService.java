@@ -5,11 +5,14 @@ package br.com.releasesolutions.projetocursomc.services;
 import br.com.releasesolutions.projetocursomc.domain.Cidade;
 import br.com.releasesolutions.projetocursomc.domain.Cliente;
 import br.com.releasesolutions.projetocursomc.domain.Endereco;
+import br.com.releasesolutions.projetocursomc.domain.enums.Perfil;
 import br.com.releasesolutions.projetocursomc.domain.enums.TipoCliente;
 import br.com.releasesolutions.projetocursomc.dto.ClienteDTO;
 import br.com.releasesolutions.projetocursomc.dto.ClienteNewDTO;
 import br.com.releasesolutions.projetocursomc.repositories.ClienteRepository;
 import br.com.releasesolutions.projetocursomc.repositories.EnderecoRepository;
+import br.com.releasesolutions.projetocursomc.security.UserSS;
+import br.com.releasesolutions.projetocursomc.services.exceptions.AuthorizationException;
 import br.com.releasesolutions.projetocursomc.services.exceptions.DataIntegrityException;
 import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,6 +39,11 @@ public class ClienteService {
     }
 
     public Cliente buscarClientePorId(Integer id) {
+
+        UserSS userSS = UserService.getUserAuthenticated();
+
+        if (userSS == null || !userSS.hasRole(Perfil.ADMIN) && !id.equals(userSS.getId()))
+            throw new AuthorizationException("Acesso negado.");
 
         Cliente cliente = clienteRepository.findById(id).orElse(null);
 
