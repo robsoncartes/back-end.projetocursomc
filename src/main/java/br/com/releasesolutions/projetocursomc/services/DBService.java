@@ -24,7 +24,6 @@ public class DBService {
     private PagamentoRepository pagamentoRepository;
     private ItemPedidoRepository itemPedidoRepository;
     private BCryptPasswordEncoder passwordEncoder;
-    private S3Service s3Service;
 
     public DBService(
             CategoriaRepository categoriaRepository,
@@ -36,8 +35,7 @@ public class DBService {
             PedidoRepository pedidoRepository,
             PagamentoRepository pagamentoRepository,
             ItemPedidoRepository itemPedidoRepository,
-            BCryptPasswordEncoder passwordEncoder,
-            S3Service s3Service
+            BCryptPasswordEncoder passwordEncoder
     ) {
         this.categoriaRepository = categoriaRepository;
         this.produtoRepository = produtoRepository;
@@ -49,7 +47,6 @@ public class DBService {
         this.pagamentoRepository = pagamentoRepository;
         this.itemPedidoRepository = itemPedidoRepository;
         this.passwordEncoder = passwordEncoder;
-        this.s3Service = s3Service;
     }
 
     public void instantiateTestDatabase() throws Exception {
@@ -158,6 +155,5 @@ public class DBService {
         produto3.getItensPedidos().add(itemPedido2);
 
         itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
-        s3Service.uploadFile("C:\\S3-ImagensUpload\\teste.png");
     }
 }

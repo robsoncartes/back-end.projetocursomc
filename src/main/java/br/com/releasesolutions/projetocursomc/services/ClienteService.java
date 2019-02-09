@@ -21,8 +21,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -31,11 +33,13 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
     private EnderecoRepository enderecoRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private S3Service s3Service;
 
-    public ClienteService(ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder passwordEncoder) {
+    public ClienteService(ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder passwordEncoder, S3Service s3Service) {
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
         this.passwordEncoder = passwordEncoder;
+        this.s3Service = s3Service;
     }
 
     public Cliente buscarClientePorId(Integer id) {
@@ -114,5 +118,10 @@ public class ClienteService {
     private void updateData(Cliente newCliente, Cliente cliente) {
         newCliente.setNome(cliente.getNome());
         newCliente.setEmail(cliente.getEmail());
+    }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile) {
+
+        return s3Service.uploadFile(multipartFile);
     }
 }
