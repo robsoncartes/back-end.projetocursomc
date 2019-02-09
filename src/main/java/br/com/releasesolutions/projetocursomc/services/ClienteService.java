@@ -15,6 +15,7 @@ import br.com.releasesolutions.projetocursomc.security.UserSS;
 import br.com.releasesolutions.projetocursomc.services.exceptions.AuthorizationException;
 import br.com.releasesolutions.projetocursomc.services.exceptions.DataIntegrityException;
 import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 
@@ -34,12 +36,17 @@ public class ClienteService {
     private EnderecoRepository enderecoRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private S3Service s3Service;
+    private ImageService imageService;
 
-    public ClienteService(ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder passwordEncoder, S3Service s3Service) {
+    @Value("${img.prefix.client.profile}")
+    private String prefixo;
+
+    public ClienteService(ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder passwordEncoder, S3Service s3Service, ImageService imageService) {
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
         this.passwordEncoder = passwordEncoder;
         this.s3Service = s3Service;
+        this.imageService = imageService;
     }
 
     public Cliente buscarClientePorId(Integer id) {
@@ -127,12 +134,9 @@ public class ClienteService {
         if (userSS == null)
             throw new AuthorizationException("Acesso negado.");
 
-        URI uri = s3Service.uploadFile(multipartFile);
-        Cliente cliente = clienteRepository.getOne(userSS.getId());
+        BufferedImage pngImage = imageService.getPngImageFromFile(multipartFile);
+        String fileName = prefixo + userSS.getId() + ".png";
 
-        cliente.setImageUrl(uri.toString());
-        clienteRepository.save(cliente);
-
-        return uri;
+        return s3Service.uploadFile(imageService.getInputStream(pngImage, "png"), fileName, "image");
     }
 }

@@ -28,7 +28,7 @@ public class S3Service {
         this.amazonS3 = s3Client;
     }
 
-    URI uploadFile(MultipartFile multipartFile) {
+    public URI uploadFile(MultipartFile multipartFile) {
 
         try {
             String fileName = multipartFile.getOriginalFilename();
@@ -42,7 +42,7 @@ public class S3Service {
         }
     }
 
-    private URI uploadFile(InputStream inputStream, String fileName, String contentType) {
+    public URI uploadFile(InputStream inputStream, String fileName, String contentType) {
 
         try {
             ObjectMetadata objectMetadata = new ObjectMetadata();
