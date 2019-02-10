@@ -41,6 +41,9 @@ public class ClienteService {
     @Value("${img.prefix.client.profile}")
     private String prefixo;
 
+    @Value("${img.profile.size}")
+    private Integer size;
+
     public ClienteService(ClienteRepository clienteRepository, EnderecoRepository enderecoRepository, BCryptPasswordEncoder passwordEncoder, S3Service s3Service, ImageService imageService) {
         this.clienteRepository = clienteRepository;
         this.enderecoRepository = enderecoRepository;
@@ -135,8 +138,11 @@ public class ClienteService {
             throw new AuthorizationException("Acesso negado.");
 
         BufferedImage pngImage = imageService.getPngImageFromFile(multipartFile);
+        BufferedImage cropedImage = imageService.cropSquareImage(pngImage);
+        BufferedImage resizeDImage = imageService.resizeImage(cropedImage, size);
+
         String fileName = prefixo + userSS.getId() + ".png";
 
-        return s3Service.uploadFile(imageService.getInputStream(pngImage, "png"), fileName, "image");
+        return s3Service.uploadFile(imageService.getInputStream(resizeDImage, "png"), fileName, "image");
     }
 }
