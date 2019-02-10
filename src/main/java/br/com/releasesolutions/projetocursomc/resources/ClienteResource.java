@@ -34,6 +34,14 @@ public class ClienteResource {
         return ResponseEntity.ok().body(cliente);
     }
 
+    @RequestMapping(value = "/email", method = RequestMethod.GET)
+    public ResponseEntity<Cliente> findClienteByEmail(@RequestParam(value = "value") String email) {
+
+        Cliente cliente = clienteService.buscarClientePorEmail(email);
+
+        return ResponseEntity.ok().body(cliente);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insertCliente(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
 
@@ -52,7 +60,6 @@ public class ClienteResource {
         clienteService.atualizarCliente(cliente);
 
         return ResponseEntity.noContent().build();
-
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
