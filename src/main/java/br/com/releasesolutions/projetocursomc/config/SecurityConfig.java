@@ -100,6 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 
+
     @Bean
     CorsConfigurationSource getCorsConfigurationSource() {
 
@@ -108,6 +109,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         return source;
     }
+
+
+    /*
+
+    Substituir a função acima em casos de problema de CORS no método PUT e DELETE. Problema não ocorreu na versão do SpringBoot 2.0.5
+
+    @Bean
+    CorsConfigurationSource getCorsConfigurationSource() {
+
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+
+        corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+
+        return source;
+    }
+    */
 
     @Bean
     public BCryptPasswordEncoder getPasswordEncoder() {
