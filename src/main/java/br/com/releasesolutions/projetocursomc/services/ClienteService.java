@@ -76,8 +76,9 @@ public class ClienteService {
 
         Cliente cliente = clienteRepository.findByEmail(email);
 
-        if (cliente == null)
-            throw new ObjectNotFoundException("Cliente não encontrado. Id: " + userSS.getId() + ", Tipo: " + Cliente.class.getName());
+        if (cliente == null) {
+            throw new ObjectNotFoundException("Cliente não encontrado. Email: " + email + ", Tipo: " + Cliente.class.getName());
+        }
 
         return cliente;
     }

@@ -199,11 +199,12 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(estado1, estado2));
         cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3, cidade4));
 
-        Cliente cliente1 = new Cliente(null, "Cliente 1", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
-        Cliente cliente2 = new Cliente(null, "Admin", "robsoncartes@outlook.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
+        Cliente cliente1 = new Cliente(null, "Admin", "robsoncartes@outlook.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
+        Cliente cliente2 = new Cliente(null, "Cliente 1", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
 
-        cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
+        cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99137-7374"));
         cliente2.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
+        cliente1.addPerfil(Perfil.ADMIN);
 
         Endereco endereco1 = new Endereco(null, "Rua Felisbina", "383", "casa", "Jardim Imperial", "12234-070", cliente1, cidade1);
         Endereco endereco2 = new Endereco(null, "Rua Estados Unidos", "2001", "apto 11", "Jardim Paulista", "05212-060", cliente1, cidade2);
@@ -213,15 +214,14 @@ public class DBService {
 
         cliente1.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
         cliente2.getEnderecos().addAll(Arrays.asList(endereco3, endereco4));
-        cliente2.addPerfil(Perfil.ADMIN);
 
         clienteRepository.saveAll(Arrays.asList(cliente1, cliente2));
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3, endereco4));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-        Pedido pedido1 = new Pedido(null, sdf.parse("13/01/2019 16:35"), cliente1, endereco1);
-        Pedido pedido2 = new Pedido(null, sdf.parse("14/01/2019 14:35"), cliente1, endereco2);
+        Pedido pedido1 = new Pedido(null, sdf.parse("13/01/2019 16:35"), cliente2, endereco3);
+        Pedido pedido2 = new Pedido(null, sdf.parse("14/01/2019 14:35"), cliente2, endereco4);
 
         Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 10);
         pedido1.setPagamento(pagamento1);
@@ -229,7 +229,7 @@ public class DBService {
         Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2, sdf.parse("13/02/2019 10:00"), null);
         pedido2.setPagamento(pagamento2);
 
-        cliente1.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
+        cliente2.getPedidos().addAll(Arrays.asList(pedido1, pedido2));
 
         pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
         pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));

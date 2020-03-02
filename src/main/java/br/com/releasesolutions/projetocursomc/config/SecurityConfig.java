@@ -3,6 +3,7 @@ package br.com.releasesolutions.projetocursomc.config;
 import br.com.releasesolutions.projetocursomc.security.JWTAuthenticationFilter;
 import br.com.releasesolutions.projetocursomc.security.JWTAuthorizationFilter;
 import br.com.releasesolutions.projetocursomc.security.JWTUtil;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -50,11 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-            "/clientes/",
+            "/clientes/**",
             "/auth/forgot_password/**"
     };
 
-    public SecurityConfig(Environment environment, UserDetailsService userDetailsService, JWTUtil jwtUtil) {
+    public SecurityConfig(Environment environment, @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, JWTUtil jwtUtil) {
         this.environment = environment;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;

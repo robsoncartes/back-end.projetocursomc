@@ -15,6 +15,7 @@ public abstract class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer estadoPagamento;
 
@@ -24,10 +25,11 @@ public abstract class Pagamento implements Serializable {
     @MapsId
     private Pedido pedido;
 
-    Pagamento() {
+    public Pagamento() {
     }
 
-    Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
+
+    public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
         this.id = id;
         this.estadoPagamento = (estadoPagamento == null) ? null : estadoPagamento.getCodigo();
         this.pedido = pedido;
