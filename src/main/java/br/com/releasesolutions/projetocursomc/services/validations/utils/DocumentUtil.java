@@ -50,5 +50,4 @@ public class DocumentUtil {
         final Integer digit2 = calculate(cnpj.substring(0, 12) + digit1, weightCnpj);
         return cnpj.equals(cnpj.substring(0, 12) + digit1.toString() + digit2.toString());
     }
-
 }
