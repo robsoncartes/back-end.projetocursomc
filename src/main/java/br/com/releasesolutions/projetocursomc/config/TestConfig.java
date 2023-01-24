@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 @Profile("test")
 public class TestConfig {
 
-    private DBService dbService;
+    private final DBService dbService;
 
     public TestConfig(DBService dbService) {
         this.dbService = dbService;
