@@ -6,6 +6,7 @@ import br.com.releasesolutions.projetocursomc.services.exceptions.ObjectNotFound
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -16,7 +17,7 @@ public class AuthService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private EmailService emailService;
 
-    private Random random = new Random();
+    private Random random = new SecureRandom();
 
     public AuthService(ClienteRepository clienteRepository, BCryptPasswordEncoder bCryptPasswordEncoder, EmailService emailService) {
         this.clienteRepository = clienteRepository;
