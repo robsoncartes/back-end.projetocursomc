@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/estados")
 public class EstadoResource {
 
-    private EstadoService estadoService;
-    private CidadeService cidadeService;
+    private final EstadoService estadoService;
+    private final CidadeService cidadeService;
 
     public EstadoResource(EstadoService estadoService, CidadeService cidadeService) {
         this.estadoService = estadoService;

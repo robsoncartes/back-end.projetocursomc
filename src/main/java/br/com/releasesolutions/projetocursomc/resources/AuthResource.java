@@ -18,8 +18,8 @@ import javax.validation.Valid;
 @RequestMapping(value = "/auth")
 public class AuthResource {
 
-    private JWTUtil jwtUtil;
-    private AuthService authService;
+    private final JWTUtil jwtUtil;
+    private final AuthService authService;
 
     public AuthResource(JWTUtil jwtUtil, AuthService authService) {
         this.jwtUtil = jwtUtil;

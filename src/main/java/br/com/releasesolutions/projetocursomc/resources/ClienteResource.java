@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
 
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
 
     public ClienteResource(ClienteService clienteService) {
         this.clienteService = clienteService;
