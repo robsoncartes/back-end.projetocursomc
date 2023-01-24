@@ -6,7 +6,6 @@ import br.com.releasesolutions.projetocursomc.dto.ClienteNewDTO;
 import br.com.releasesolutions.projetocursomc.repositories.ClienteRepository;
 import br.com.releasesolutions.projetocursomc.resources.exceptions.FieldMessage;
 import br.com.releasesolutions.projetocursomc.services.validations.utils.DocumentUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -14,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+    private final ClienteRepository clienteRepository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    public ClienteInsertValidator(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
     @Override
     public void initialize(ClienteInsert ann) {
