@@ -14,16 +14,16 @@ import java.util.Arrays;
 @Service
 public class DBService {
 
-    private CategoriaRepository categoriaRepository;
-    private ProdutoRepository produtoRepository;
-    private EstadoRepository estadoRepository;
-    private CidadeRepository cidadeRepository;
-    private ClienteRepository clienteRepository;
-    private EnderecoRepository enderecoRepository;
-    private PedidoRepository pedidoRepository;
-    private PagamentoRepository pagamentoRepository;
-    private ItemPedidoRepository itemPedidoRepository;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final CategoriaRepository categoriaRepository;
+    private final ProdutoRepository produtoRepository;
+    private final EstadoRepository estadoRepository;
+    private final CidadeRepository cidadeRepository;
+    private final ClienteRepository clienteRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final PedidoRepository pedidoRepository;
+    private final PagamentoRepository pagamentoRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public DBService(
             CategoriaRepository categoriaRepository,

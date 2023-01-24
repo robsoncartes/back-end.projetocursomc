@@ -23,8 +23,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
      * @param authenticationManager the bean to submit authentication requests to
      */
 
-    private JWTUtil jwtUtil;
-    private UserDetailsService userDetailsService;
+    private final JWTUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
 
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, UserDetailsService userDetailsService) {
         super(authenticationManager);

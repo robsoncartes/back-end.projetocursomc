@@ -32,11 +32,11 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    private ClienteRepository clienteRepository;
-    private EnderecoRepository enderecoRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-    private S3Service s3Service;
-    private ImageService imageService;
+    private final ClienteRepository clienteRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final S3Service s3Service;
+    private final ImageService imageService;
 
     @Value("${img.prefix.client.profile}")
     private String prefixo;

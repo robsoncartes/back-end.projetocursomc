@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 public class CidadeService {
 
-    private CidadeRepository cidadeRepository;
-    private EstadoRepository estadoRepository;
+    private final CidadeRepository cidadeRepository;
+    private final EstadoRepository estadoRepository;
 
     public CidadeService(CidadeRepository cidadeRepository, EstadoRepository estadoRepository) {
         this.cidadeRepository = cidadeRepository;

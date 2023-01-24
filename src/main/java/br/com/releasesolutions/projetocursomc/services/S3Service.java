@@ -17,9 +17,9 @@ import java.net.URISyntaxException;
 @Service
 public class S3Service {
 
-    private Logger LOG = LoggerFactory.getLogger(S3Service.class);
+    private final Logger LOG = LoggerFactory.getLogger(S3Service.class);
 
-    private AmazonS3 amazonS3;
+    private final AmazonS3 amazonS3;
 
     @Value("${s3.bucket}")
     private String s3BucketName;

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class EstadoService {
 
-    private EstadoRepository estadoRepository;
+    private final EstadoRepository estadoRepository;
 
     public EstadoService(EstadoRepository estadoRepository) {
         this.estadoRepository = estadoRepository;
