@@ -50,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader("access-control-expose-headers", "Authorization");
     }
 
-    private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    private static class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
         /**
          * Called when an authentication attempt fails.
