@@ -35,10 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * Creates an instance with the default configuration enabled.
      */
 
-    private Environment environment;
+    private final Environment environment;
     //@Qualifier("userDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
-    private JWTUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+    private final JWTUtil jwtUtil;
 
     private static final String[] PUBLIC_MATCHERS = {
             "/h2-console/**"
@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         if (Arrays.asList(environment.getActiveProfiles()).contains("test"))
             http.headers().frameOptions().disable();
-        
+
         http.csrf().disable();
 
         http.authorizeRequests()
