@@ -4,7 +4,6 @@ import br.com.releasesolutions.projetocursomc.domain.Cliente;
 import br.com.releasesolutions.projetocursomc.dto.ClienteDTO;
 import br.com.releasesolutions.projetocursomc.repositories.ClienteRepository;
 import br.com.releasesolutions.projetocursomc.resources.exceptions.FieldMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +15,13 @@ import java.util.Map;
 
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
 
-    @Autowired
-    private HttpServletRequest httpServletRequest;
+    private final HttpServletRequest httpServletRequest;
+    private final ClienteRepository clienteRepository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    public ClienteUpdateValidator(HttpServletRequest httpServletRequest, ClienteRepository clienteRepository) {
+        this.httpServletRequest = httpServletRequest;
+        this.clienteRepository = clienteRepository;
+    }
 
     @Override
     public void initialize(ClienteUpdate ann) {
