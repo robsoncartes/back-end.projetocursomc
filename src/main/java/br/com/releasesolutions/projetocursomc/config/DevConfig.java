@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 @Profile("dev")
 public class DevConfig {
 
-    private DBService dbService;
+    private final DBService dbService;
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String stragegy;
