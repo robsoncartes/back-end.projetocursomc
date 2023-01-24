@@ -13,11 +13,11 @@ import java.util.stream.IntStream;
 @Service
 public class AuthService {
 
-    private ClienteRepository clienteRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private EmailService emailService;
+    private final ClienteRepository clienteRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EmailService emailService;
 
-    private Random random = new SecureRandom();
+    private final Random random = new SecureRandom();
 
     public AuthService(ClienteRepository clienteRepository, BCryptPasswordEncoder bCryptPasswordEncoder, EmailService emailService) {
         this.clienteRepository = clienteRepository;
@@ -37,7 +37,6 @@ public class AuthService {
 
         clienteRepository.save(cliente);
         emailService.sendNewPasswordEmail(cliente, newPassword);
-
     }
 
     private String newPassword() {
