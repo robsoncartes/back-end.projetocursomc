@@ -200,15 +200,15 @@ public class DBService {
         cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3, cidade4));
 
         Cliente cliente1 = new Cliente(null, "Admin", "robsoncartes@outlook.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
-        Cliente cliente2 = new Cliente(null, "Cliente 1", "robsoncartes@gmail.com", "123456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
+        Cliente cliente2 = new Cliente(null, "Cliente 1", "robsoncartes@gmail.com", "223456789", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("aluno"));
 
-        cliente1.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99137-7374"));
-        cliente2.getTelefones().addAll(Arrays.asList("(12) 3966-3685", "(12) 99114-9818"));
+        cliente1.getTelefones().addAll(Arrays.asList("(11) 1111-1111", "(12) 91111-1111"));
+        cliente2.getTelefones().addAll(Arrays.asList("(11) 2222-2222", "(12) 92222-2222"));
         cliente1.addPerfil(Perfil.ADMIN);
 
-        Endereco endereco1 = new Endereco(null, "Rua Felisbina", "383", "casa", "Jardim Imperial", "12234-070", cliente1, cidade1);
-        Endereco endereco2 = new Endereco(null, "Rua Estados Unidos", "2001", "apto 11", "Jardim Paulista", "05212-060", cliente1, cidade2);
-        Endereco endereco3 = new Endereco(null, "Rua Rio", "40", "171", "Mil graus", "05212-060", cliente2, cidade3);
+        Endereco endereco1 = new Endereco(null, "Rua Mordor", "50001", "casa", "Mordor", "00000-0001", cliente1, cidade1);
+        Endereco endereco2 = new Endereco(null, "Rua San", "42001", "apto 11", "Shire", "00000-0002", cliente1, cidade2);
+        Endereco endereco3 = new Endereco(null, "Rua Theoden", "42", "casa", "Rohan", "00000-0003", cliente2, cidade3);
         Endereco endereco4 = new Endereco(null, "Rua Comendador José Schaffer", "1675", "casa", "Vila Inglesa", "12460-000", cliente2, cidade4);
         //Endereco endereco4 = new Endereco(null, "Rua Rio", "40", "casa", "Leblon", "12345-000", cliente2, cidade3);
 
