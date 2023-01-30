@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import java.util.Set;
 @Entity
 public class Pedido implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
