@@ -1,12 +1,17 @@
 package br.com.releasesolutions.projetocursomc.resources;
 
 import br.com.releasesolutions.projetocursomc.domain.Pedido;
+import br.com.releasesolutions.projetocursomc.dto.PedidoDTO;
 import br.com.releasesolutions.projetocursomc.services.PedidoService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.validation.Valid;
 import java.net.URI;
 
@@ -29,10 +34,12 @@ public class PedidoResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insertPedido(@Valid @RequestBody Pedido pedido) {
+    public ResponseEntity<Void> insertPedido(@Valid @RequestBody PedidoDTO pedidoDto) {
 
-        pedidoService.inserirPedido(pedido);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pedido.getId()).toUri();
+        Pedido pedido = pedidoService.pedidoFromPedidoDTO(pedidoDto);
+        Pedido pedidoSalvo = pedidoService.inserirPedido(pedido);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pedidoSalvo.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }

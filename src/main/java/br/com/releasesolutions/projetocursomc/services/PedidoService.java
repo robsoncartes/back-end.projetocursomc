@@ -8,6 +8,7 @@ import br.com.releasesolutions.projetocursomc.domain.PagamentoComBoleto;
 import br.com.releasesolutions.projetocursomc.domain.Pedido;
 import br.com.releasesolutions.projetocursomc.domain.enums.EstadoPagamento;
 import br.com.releasesolutions.projetocursomc.domain.enums.Perfil;
+import br.com.releasesolutions.projetocursomc.dto.PedidoDTO;
 import br.com.releasesolutions.projetocursomc.repositories.ItemPedidoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.PagamentoRepository;
 import br.com.releasesolutions.projetocursomc.repositories.PedidoRepository;
@@ -20,8 +21,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
+import java.util.Set;
 
 @Service
 public class PedidoService {
@@ -87,14 +88,16 @@ public class PedidoService {
         pedidoRepository.save(pedido);
         pagamentoRepository.save(pedido.getPagamento());
 
-        for (ItemPedido itemPedido : pedido.getItensPedidos()) {
+        Set<ItemPedido> itensPedidos = pedido.getItensPedidos();
+
+        for (ItemPedido itemPedido : itensPedidos) {
             itemPedido.setDesconto(0.0);
             itemPedido.setProduto(produtoService.buscarProdutoPorId(itemPedido.getProduto().getId()));
             itemPedido.setPreco(itemPedido.getProduto().getPreco());
             itemPedido.setPedido(pedido);
         }
 
-        itemPedidoRepository.saveAll(pedido.getItensPedidos());
+        itemPedidoRepository.saveAll(itensPedidos);
 
         if ("test".equals(perfilAtivo))
             emailService.sendOrderConfirmationEmail(pedido);
@@ -115,5 +118,10 @@ public class PedidoService {
         Cliente cliente = clienteService.buscarClientePorId(userSS.getId());
 
         return pedidoRepository.findByCliente(cliente, pageRequest);
+    }
+
+    public Pedido pedidoFromPedidoDTO(PedidoDTO dto) {
+
+        return new Pedido(dto.getId(), dto.getCliente(), dto.getEnderecoDeEntrega(), dto.getPagamento(), dto.getItensPedido());
     }
 }
