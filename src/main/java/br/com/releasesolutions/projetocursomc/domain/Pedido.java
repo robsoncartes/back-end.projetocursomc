@@ -1,8 +1,15 @@
 package br.com.releasesolutions.projetocursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -45,6 +52,14 @@ public class Pedido implements Serializable {
         this.instante = instante;
         this.cliente = cliente;
         this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Pedido(Integer id, Cliente cliente, Endereco enderecoDeEntrega, Pagamento pagamento, Set<ItemPedido> itemPedidos) {
+        this.id = id;
+        this.cliente = cliente;
+        this.enderecoDeEntrega = enderecoDeEntrega;
+        this.pagamento = pagamento;
+        this.itensPedidos = itemPedidos;
     }
 
     public Integer getId() {
