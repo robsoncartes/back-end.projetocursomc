@@ -15,6 +15,7 @@ public class JacksonConfig {
 
         return new Jackson2ObjectMapperBuilder() {
 
+            @Override
             public void configure(ObjectMapper objectMapper) {
                 objectMapper.registerSubtypes(PagamentoComBoleto.class);
                 objectMapper.registerSubtypes(PagamentoComCartao.class);
